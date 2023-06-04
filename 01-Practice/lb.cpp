@@ -101,6 +101,7 @@ inOrderTraversal(root);
 cout<<endl;
 postOrderTraversal(root);
 cout<<endl;
+cout<<endl;
 
     return 0;
 }
