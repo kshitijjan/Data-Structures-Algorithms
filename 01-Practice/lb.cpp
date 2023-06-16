@@ -18,7 +18,7 @@ class node{
 node* buildTree(node* root){
 
     int data;
-    cout<<"Enter the data: ";
+    cout<<"Enter the data ";
     cin>>data;
 
     root = new node(data);
@@ -29,7 +29,7 @@ node* buildTree(node* root){
 
     cout<<"Enter the data for inserting in left of "<<data<<": ";
     root->left = buildTree(root->left);
-    cout<<"Enter the data for inserting in right of "<<data<<": ";
+    cout<<"Enter the data fir inserting in right of "<<data<<": ";
     root->right = buildTree(root->right);
 
     return root;
@@ -47,12 +47,14 @@ void levelOrderTraversal(node* root){
 
         if(temp == NULL){
             cout<<endl;
+
             if(!q.empty()){
                 q.push(NULL);
             }
         }
         else{
             cout<<temp->data<<" ";
+
             if(temp->left){
                 q.push(temp->left);
             }
@@ -61,47 +63,49 @@ void levelOrderTraversal(node* root){
             }
         }
     }
+
 }
 
-void preOrderTraversal(node* root){
+void buildLevelOrderTraversal(node* &root){
 
-    if(root == NULL){
-        return;
-    }
-    cout<<root->data<<" ";
-    preOrderTraversal(root->left);
-    preOrderTraversal(root->right);
-}
+    queue<node*> q;
+    int data;
+    cout<<"Enter the data "<<" ";
+    cin>>data;
+    root = new node(data);
+    q.push(root);
 
-void inOrderTraversal(node* root){
-    if(root == NULL){
-        return;
+    while(!q.empty()){
+        node* temp = q.front();
+        q.pop();
+
+        cout<<"Enter the data for inserting in left of "<<temp->data<<" ";
+        int leftData;
+        cin>>leftData;
+
+        if(leftData != -1){
+            temp->left = new node(leftData);
+            q.push(temp->left);
+        }
+
+        cout<<"Enter the data for inserting in right of "<<temp->data<<" ";
+        int rightData;
+        cin>>rightData;
+
+        if(rightData != -1){
+            temp->right = new node(rightData);
+            q.push(temp->right);
+        }
     }
-    inOrderTraversal(root->left);
-    cout<<root->data<<" ";
-    inOrderTraversal(root->right);
-}
-void postOrderTraversal(node* root){
-    if(root == NULL){
-        return;
-    }
-    postOrderTraversal(root->left);
-    postOrderTraversal(root->right);
-    cout<<root->data<<" ";
 }
 
 int main(){
-// 1 3 7 -1 -1 11 -1 -1 5 17 -1 - 1 -1
-node* root = NULL;
-root = buildTree(root);
-levelOrderTraversal(root);
-preOrderTraversal(root);
-cout<<endl;
-inOrderTraversal(root);
-cout<<endl;
-postOrderTraversal(root);
-cout<<endl;
-cout<<endl;
+
+    node* root = NULL;
+
+    // root = buildTree(root);
+    buildLevelOrderTraversal(root);
+    levelOrderTraversal(root);
 
     return 0;
 }
