@@ -15,41 +15,18 @@ class node{
     }
 };
 
-node* buildTree(node* root){
-
-    int data;
-    cout<<"Enter the data"<<endl;
-    cin>>data;
-
-    root = new node(data);
-
-    if(data == -1){
-        return NULL;
-    }
-
-
-    cout<<"Enter the data for inserting in left of "<<data<<endl;
-    root->left = buildTree(root->left);
-
-    cout<<"Enter the data for inserting in right of "<<data<<endl;
-    root->right = buildTree(root->right);
-
-    return root;
-}
-
 void levelOrderTraversal(node* root){
+
     queue<node*> q;
     q.push(root);
     q.push(NULL);
 
     while(!q.empty()){
-
         node* temp = q.front();
         q.pop();
 
         if(temp == NULL){
             cout<<endl;
-
             if(!q.empty()){
                 q.push(NULL);
             }
@@ -65,13 +42,40 @@ void levelOrderTraversal(node* root){
         }
     }
 }
+node* insertIntoBST(node* root, int data){
 
+    if(root == NULL){
+        //The BST's root is empty initially, so insert root node
+        root = new node(data);
+        return root;
+    }
+    if(data > root->data){
+        //Insert into the left part of each node
+        root->right = insertIntoBST(root->right, data);
+    }
+    else{
+        //Insert into the right part of each node
+        root->left = insertIntoBST(root->left, data);
+    }
+    return root;
+}
+
+void takeInput(node* &root){
+
+    int data;
+    cin>>data;
+
+    while(data != -1){
+        root = insertIntoBST(root, data);
+        cin>>data;
+    }
+}
 
 int main(){
 
 node* root = NULL;
-
-root = buildTree(root);
+cout<<"Enter the data for creating a BST"<<endl;
+takeInput(root);
 levelOrderTraversal(root);
 
     return 0;
